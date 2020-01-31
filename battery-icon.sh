@@ -12,7 +12,7 @@
 
 bat=$(acpi -b)
 state=$(echo ${bat} | awk '{print $3}')
-level=$(echo ${bat} | grep -Po '(?<=ing, )(.*?)(?=%)')
+level=$(echo ${bat} | grep -Po '(?<=ging, |Full, )(.*?)(?=%)')
 
 if [ "$state" = "Not" ]; then
     [ "$level" = "" ] && level=-1
