@@ -8,28 +8,22 @@
 # Project: https://github.com/nwg-piotr/tint2-executors
 # License: GPL3
 
-# Dependencies: `xbacklight` or `light-git'
-
-# Prefer the `light` package, use `xbacklight` if `light` not found
-if [[ $(which light) == *"/light"* ]]
-then
-    b=$(light -G)
-else
-    b=$(xbacklight -get)
-fi
+blp=/sys/class/backlight
+bld=$(ls $blp)
+b=$(cat $blp/$bld/brightness)
 
 # Lets round the float result
 bri=$(echo "($b+0.5)/1" | bc)
 
-if [[ "$bri" -gt "90" ]]; then
+if [ "$bri" -gt "90" ]; then
     echo ~/tint2-executors/images/bri-full.svg
-elif [[ "$bri" -gt "50" ]]; then
+elif [ "$bri" -gt "50" ]; then
     echo ~/tint2-executors/images/bri-high.svg
-elif [[ "$bri" -gt "30" ]]; then
+elif [ "$bri" -gt "30" ]; then
     echo ~/tint2-executors/images/bri-medium.svg
 else
     echo ~/tint2-executors/images/bri-low.svg
 fi
-if  [[ $1 = "-l" ]]; then
+if  [ $1 = "-l" ]; then
     echo ${bri}%
 fi
